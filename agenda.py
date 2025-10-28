@@ -25,7 +25,15 @@ def editar_contato(contatos, i, nome_contato=None, telefone_contato=None):
   else:
       print("\nContato não encontrado.")
 
-
+def favoritar_contato(contatos, i):
+  index_ajustado = i - 1
+  if 0 <= index_ajustado < len(contatos):
+      contato = contatos[index_ajustado]
+      contato["Favorito: "] = not contato["Favorito: "]
+      status = "❤️ Favorito" if contato["Favorito: "] else "💔 Removido dos favoritos"
+      print(f"\n{contato['Nome:']} agora está marcado como: {status}")
+  else:
+      print("\nContato não encontrado.")
 
 
 contatos = []
@@ -57,7 +65,14 @@ while True:
         editar_contato(contatos, indice_contato, novo_nome if novo_nome else None, novo_telefone if novo_telefone else None)
       except ValueError:
         print("Entrada inválida. Digite um número válido.")
-
+  elif opcao == "4":
+    ver_contatos(contatos)
+    if contatos:
+      try:
+        indice_contato = int(input("Digite o número do contato que deseja favoritar/desfavoritar: "))
+        favoritar_contato(contatos, indice_contato)
+      except ValueError:
+        print("Entrada inválida. Digite um número válido.")
 
   elif opcao == "6":
     break
