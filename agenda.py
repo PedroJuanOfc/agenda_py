@@ -4,14 +4,28 @@ def adicionar_contato(contatos, nome_contato, telefone_contato, favorito=False):
   return
 
 def ver_contatos(contatos):
-    if not contatos:
-        print("\nNenhum contato cadastrado.")
-        return
-    
-    print("\nLista de contatos:")
-    for i, contato in enumerate(contatos, start=1):
-        coracao = "❤️" if contato["Favorito: "] else ""
-        print(f"{i}. {contato['Nome:']} - {contato['Telefone:']} {coracao}")
+  if not contatos:
+      print("\nNenhum contato cadastrado.")
+      return
+  
+  print("\nLista de contatos:")
+  for i, contato in enumerate(contatos, start=1):
+      coracao = "❤️" if contato["Favorito: "] else ""
+      print(f"{i}. {contato['Nome:']} - {contato['Telefone:']} {coracao}")
+      return
+
+def editar_contato(contatos, i, nome_contato=None, telefone_contato=None):
+  index_ajustado = i - 1
+  if 0 <= index_ajustado < len(contatos):
+      if nome_contato:
+          contatos[index_ajustado]["Nome:"] = nome_contato
+      if telefone_contato:
+          contatos[index_ajustado]["Telefone:"] = telefone_contato
+      print("\nContato atualizado com sucesso!")
+  else:
+      print("\nContato não encontrado.")
+
+
 
 
 contatos = []
@@ -33,5 +47,17 @@ while True:
     adicionar_contato(contatos, nome_contato, telefone_contato)
   elif opcao == "2":
     ver_contatos(contatos)
+  elif opcao == "3":
+    ver_contatos(contatos)
+    if contatos:
+      try:
+        indice_contato = int(input("Digite o número do contato que deseja alterar: "))
+        novo_nome = input("Novo nome (deixe em branco para manter): ")
+        novo_telefone = input("Novo telefone (deixe em branco para manter): ")
+        editar_contato(contatos, indice_contato, novo_nome if novo_nome else None, novo_telefone if novo_telefone else None)
+      except ValueError:
+        print("Entrada inválida. Digite um número válido.")
+
+
   elif opcao == "6":
     break
