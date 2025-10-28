@@ -5,35 +5,41 @@ def adicionar_contato(contatos, nome_contato, telefone_contato, favorito=False):
 
 def ver_contatos(contatos):
   if not contatos:
-      print("\nNenhum contato cadastrado.")
-      return
+    print("\nNenhum contato cadastrado.")
   
   print("\nLista de contatos:")
   for i, contato in enumerate(contatos, start=1):
-      coracao = "❤️" if contato["Favorito: "] else ""
-      print(f"{i}. {contato['Nome:']} - {contato['Telefone:']} {coracao}")
-      return
+    coracao = "❤️" if contato["Favorito: "] else ""
+    print(f"{i}. {contato['Nome:']} - {contato['Telefone:']} {coracao}")
 
 def editar_contato(contatos, i, nome_contato=None, telefone_contato=None):
   index_ajustado = i - 1
   if 0 <= index_ajustado < len(contatos):
-      if nome_contato:
-          contatos[index_ajustado]["Nome:"] = nome_contato
-      if telefone_contato:
-          contatos[index_ajustado]["Telefone:"] = telefone_contato
-      print("\nContato atualizado com sucesso!")
+    if nome_contato:
+      contatos[index_ajustado]["Nome:"] = nome_contato
+    if telefone_contato:
+      contatos[index_ajustado]["Telefone:"] = telefone_contato
+    print("\nContato atualizado com sucesso!")
   else:
-      print("\nContato não encontrado.")
+    print("\nContato não encontrado.")
 
 def favoritar_contato(contatos, i):
   index_ajustado = i - 1
   if 0 <= index_ajustado < len(contatos):
-      contato = contatos[index_ajustado]
-      contato["Favorito: "] = not contato["Favorito: "]
-      status = "❤️ Favorito" if contato["Favorito: "] else "💔 Removido dos favoritos"
-      print(f"\n{contato['Nome:']} agora está marcado como: {status}")
+    contato = contatos[index_ajustado]
+    contato["Favorito: "] = not contato["Favorito: "]
+    status = "❤️ Favorito" if contato["Favorito: "] else "💔 Removido dos favoritos"
+    print(f"\n{contato['Nome:']} agora está marcado como: {status}")
   else:
-      print("\nContato não encontrado.")
+    print("\nContato não encontrado.")
+
+def excluir_contato(contatos, i):
+  index_ajustado = i - 1
+  if 0 <= index_ajustado < len(contatos):
+    contato_removido = contatos.pop(index_ajustado)
+    print(f"\nContato '{contato_removido['Nome:']}' foi excluído com sucesso!")
+  else:
+    print("\nContato não encontrado.")
 
 
 contatos = []
@@ -73,6 +79,13 @@ while True:
         favoritar_contato(contatos, indice_contato)
       except ValueError:
         print("Entrada inválida. Digite um número válido.")
-
+  elif opcao == "5":
+    ver_contatos(contatos)
+    if contatos:
+      try:
+        indice_contato = int(input("Digite o número do contato que deseja excluir: "))
+        excluir_contato(contatos, indice_contato)
+      except ValueError:
+        print("Entrada inválida. Digite um número válido.")
   elif opcao == "6":
     break
