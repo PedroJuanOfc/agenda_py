@@ -3,6 +3,17 @@ def adicionar_contato(contatos, nome_contato, telefone_contato, favorito=False):
   contatos.append(contato)
   return
 
+def ver_contatos(contatos):
+    if not contatos:
+        print("\nNenhum contato cadastrado.")
+        return
+    
+    print("\nLista de contatos:")
+    for i, contato in enumerate(contatos, start=1):
+        coracao = "❤️" if contato["Favorito: "] else ""
+        print(f"{i}. {contato['Nome:']} - {contato['Telefone:']} {coracao}")
+
+
 contatos = []
 
 while True:
@@ -20,5 +31,7 @@ while True:
     nome_contato = input("Digite o nome do contato: ")
     telefone_contato = input("Digite o telefone do contato: ")
     adicionar_contato(contatos, nome_contato, telefone_contato)
+  elif opcao == "2":
+    ver_contatos(contatos)
   elif opcao == "6":
     break
